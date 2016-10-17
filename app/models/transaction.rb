@@ -4,7 +4,7 @@ class Transaction < ApplicationRecord
 
   after_create :set_account_balance
 
-  validates :amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :amount, less_than_balance: true, if: Proc.new { |t| t.retiro? }
 
   private
