@@ -1,1 +1,9 @@
-Cuentas
+<h1>Cuentas</h1>
+
+<ul width="100">
+  <% @accounts.each do |account| %>
+    <li>
+      <%= link_to account.address, show_account_url( address: account.address ) unless account.address.nil? %>
+    </li>
+  <% end %>
+</ul>

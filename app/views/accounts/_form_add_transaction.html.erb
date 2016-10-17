@@ -1,0 +1,23 @@
+
+<hr>
+<h2>Agregar Transacción</h2>
+
+<%= form_for(@transaction, url: add_transaction_path(@account.address), method: :post) do |f| %>
+    <% if @transaction.errors.any? %>
+        <div id="error_explanation">
+          <ul>
+            <% @transaction.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <%= f.text_area(:description) %> <br>
+    <%= f.number_field(:amount) %> <br>
+    <%= f.select :instruction, :collection => Transaction.instructions.keys.to_a %> <br><br>
+
+    <div class="actions">
+      <%= f.submit 'Agregar' %>
+    </div>
+<% end %>

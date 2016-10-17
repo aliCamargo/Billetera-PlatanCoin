@@ -1,1 +1,24 @@
-Show transaction
+<h1>Cuenta <%= @account.address %></h1>
+
+<hr>
+<strong>Saldo: </strong><%= @account.balance %>
+<hr>
+<h2>Transacciones</h2>
+<ul width="100">
+  <% if @account.transactions.blank? %>
+      <li>
+        No hay transacciones
+      </li>
+  <% else %>
+      <% @account.transactions.each do |transaction| %>
+          <li>
+            Monto: <%= transaction.amount %> <br>
+            Instrucción: <%= transaction.instruction %> <br>
+            Description: <%= transaction.description %> <br>
+          </li>
+      <% end %>
+  <% end %>
+
+</ul>
+
+<%= render partial: 'form_add_transaction' %>
