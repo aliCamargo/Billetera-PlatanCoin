@@ -4,6 +4,7 @@ class Account < ApplicationRecord
   after_create :set_address
 
   validates :balance, presence:true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :address, uniqueness:true
 
   private
   def set_address
