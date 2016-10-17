@@ -4,10 +4,18 @@ class Transaction < ApplicationRecord
 
   after_create :set_account_balance
 
-  validates :amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, less_than_balance: true
+  validates :amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :amount, less_than_balance: true, if: Proc.new { |t| t.retiro? }
 
   private
   def set_account_balance
-    self.account.update_attribute( :balance, self.account.balance - self.amount )
+    balance =
+      if self.deposito?
+        self.account.balance + self.amount
+      else
+        self.account.balance - self.amount
+      end
+
+    self.account.update_attribute( :balance, balance )
   end
 end
